@@ -18,7 +18,7 @@
 
 ## Problem Statement
 
-As an executive in a record company, my task is to improve the recently launched streaming service and ameliorate customers experience by building a tool that will recommend similar songs based on previous songs played or researched songs. By improving customers experience, The company will be able to retainn more customers after the trial period.
+As an executive in a record company, my task is to improve the recently launched streaming service and improve customers experience by building a tool that will recommend similar songs based on previous songs played or researched songs. By improving customers experience, The company will be able to retainn more customers after the trial period.
 
 ---
 
@@ -53,14 +53,15 @@ https://developer.spotify.com/documentation/web-api/reference/#endpoint-get-audi
 
 **All the imports and libraries:**
 
-`code(import pandas as pd
+`import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import plotly.express as px
 from re import search
 from sklearn.preprocessing import StandardScaler
 from scipy import sparse
-from sklearn.metrics.pairwise import pairwise_distances, cosine_distances, cosine_similarity)`
+from sklearn.metrics.pairwise import pairwise_distances, cosine_distances, cosine_similarity`
 
 
 ## Cleaning
@@ -81,17 +82,23 @@ outliers with songs longer than 20 minutes.
 The average danceability score is approximatively 0.6 and the least danceable song has a score of 0 which is surprising. The most danceable song has a score of 0.98.
 The average energy score is around 0.62 and the the songs with the least energy have a score of 0.000581 and the most energetic ones have a score of 0.99.
 I also looked at the key of the songs in the distribution and found that C, G and D are the most popular keys and D# is the least popular key in this dataframe.
+Since theree is a popularity score, I also looked at the correlation between other features and the popularity score and found that loudness, spotify_track_explicit and speechiness were the most correlated features.
 
 ## Preprocessing
 
-The preprocessing steps were the creation of dummies/one-hot encoding of certain columns, mainly the genres column.
-I also combined the song title and artist into a single column to use as an index. I also standard scaled all the numerical values except dummies to normmalize the values accross the dataframe. I then joined the dummies columns with the scaled features and the song title + artist column into a recommender dataframe.
+The preprocessing steps were the creation of dummies/one-hot encoding of certain columns, mainly the genres column. I also created dummies for the songs keys. The mode and explicit columns were already one hot encoded
+I used the song titles as index. I also standard scaled all the numerical values except dummies to normmalize the values accross the dataframe. I then joined the dummies columns with the scaled features and the song title into a recommender dataframe.
 
 ## Building the Recommender 
 
 First I had to resize my recommmender dataframe into a sparse dataframe and then computed pairwise distance and cosine similarity 
 which is the metric used for the recommender. Once I computed the cosine similarities, I had a matrix of (22112, 22112) and 
-set the song + artist as index. 
+set the song and the artist as two indexes. I find it easier to just have a simple code where I enter a song title and get the song + the artist back as an output with their respective cosine similarities. By playing around with the recommender I didn't get a score higher than .88
+
+## Conclusion
+
+It is a good start but there is a lot of room for improvement. First the storage issue. Then the genres needs to be regulated to avoid a lengthy cleaning process. There is also the need to incorporate user reviews to move from the stiff content based recommender. Finally the implementation of pictures, design and song preview capabilities would be a big leap forward.
 
 
 
+**link to presentation:**  https://docs.google.com/presentation/d/1AJpHnPK-gbK0Pdd2ErTS-bDujlGDCNeUEkSTLCcKNu0/edit#slide=id.g8b385fd27f_2_109
