@@ -53,7 +53,7 @@ https://developer.spotify.com/documentation/web-api/reference/#endpoint-get-audi
 
 **All the imports and libraries:**
 
-`import pandas as pd
+```import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -62,7 +62,7 @@ from re import search
 from sklearn.preprocessing import StandardScaler
 from scipy import sparse
 from sklearn.metrics.pairwise import pairwise_distances, cosine_distances, cosine_similarity`
-
+```
 
 ## Cleaning
 
